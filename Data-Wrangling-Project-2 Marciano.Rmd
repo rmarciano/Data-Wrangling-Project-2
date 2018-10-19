@@ -1,0 +1,8 @@
+library(readr)
+library(tidyr)
+library(dplyr)
+titanic <- read_csv("titanic_original.csv")
+
+#Port of embarkation
+
+titanic <- titanic %>% mutate(embarked = replace(embarked, is.na(embarked), "S"))
