@@ -1,8 +1,25 @@
 library(readr)
 library(tidyr)
 library(dplyr)
-titanic <- read_csv("titanic_original.csv")
+titanic_cleaned <- read_csv("titanic_original.csv")
+tbl_df(titanic_cleaned)
 
 #Port of embarkation
 
-titanic <- titanic %>% mutate(embarked = replace(embarked, is.na(embarked), "S"))
+titanic_cleaned <- titanic_cleaned %>% mutate(embarked = replace(embarked, is.na(embarked), "S"))
+
+#Age
+
+titanic_age <- titanic_cleaned %>% summarise(mean_age = mean(age, na.rm = TRUE))
+titanic_cleaned <- titanic_cleaned %>% mutate(age = replace(age, is.na(age), titanic_age))
+
+#Lifeboat
+
+titanic_cleaned <- titanic_cleaned %>% mutate(boat = replace(boat, is.na(boat), "None"))
+
+#Cabin
+
+titanic_cleaned <- titanic_cleaned %>% mutate(has_cabin_number = ifelse(is.na(cabin), 0, 1))
+
+
+write.csv(titanic_cleaned, "titanic_cleaned.csv")
