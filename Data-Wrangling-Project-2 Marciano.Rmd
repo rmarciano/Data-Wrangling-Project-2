@@ -10,8 +10,7 @@ titanic_cleaned <- titanic_cleaned %>% mutate(embarked = replace(embarked, is.na
 
 #Age
 
-titanic_age <- titanic_cleaned %>% summarise(mean_age = mean(age, na.rm = TRUE))
-titanic_cleaned <- titanic_cleaned %>% mutate(age = replace(age, is.na(age), titanic_age))
+titanic_cleaned <- titanic_cleaned %>% mutate(age = replace(age, is.na(age), mean(age, na.rm = TRUE)))
 
 #Lifeboat
 
